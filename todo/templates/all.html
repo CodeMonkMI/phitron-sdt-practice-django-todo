@@ -1,58 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>All Todos</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-100 p-8">
-    <div class="max-w-6xl mx-auto">
-      <h1 class="text-3xl font-bold mb-6">Todo List</h1>
-      <a href="/todo/create" class="mb-4 inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Create New Todo</a>
+{% extends 'base.html' %}
 
-      <table class="min-w-full bg-white rounded shadow">
-        <thead>
-          <tr>
-            <th class="py-2 px-4 border-b">ID</th>
-            <th class="py-2 px-4 border-b">Text</th>
-            <th class="py-2 px-4 border-b">Description</th>
-            <th class="py-2 px-4 border-b">Meta</th>
-            <th class="py-2 px-4 border-b">Created At</th>
-            <th class="py-2 px-4 border-b">Updated At</th>
-            <th class="py-2 px-4 border-b">Actions</th>
+{% block title %}
+  Todo App List
+{% endblock %}
+
+{% block content %}
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Todo List</h1>
+    <a href="/todo/create" class="mb-4 inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Create New Todo</a>
+
+    <table class="min-w-full bg-white rounded shadow">
+      <thead>
+        <tr class="border border-gray-200">
+          <th class="py-2 px-4">ID</th>
+          <th class="py-2 px-4">Text</th>
+          <th class="py-2 px-4">Description</th>
+          <th class="py-2 px-4">Meta</th>
+          <th class="py-2 px-4">Created At</th>
+          <th class="py-2 px-4">Updated At</th>
+          <th class="py-2 px-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example Todo Row -->
+        {% for todo in todos %}
+          <tr class="border-b border-gray-200">
+            <td class="py-2 px-4 text-center">{{ forloop.counter }}</td>
+            <td class="py-2 px-4">{{ todo.text }}</td>
+            <td class="py-2 px-4">{{ todo.description }}</td>
+            <td class="py-2 px-4 text-gray-500 italic">
+              {% if todo.meta %}
+                {{ todo.meta }}
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td class="py-2 px-4">{{ todo.created_at }}</td>
+            <td class="py-2 px-4">{{ todo.updated_at }}</td>
+            <td class="py-2 px-4 flex gap-2">
+              <a href="{% url 'single' todo.id %}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600">View</a>
+              <a href="{% url 'update' todo.id %}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">Edit</a>
+              <form method="POST" action="{% url 'delete' todo.id %}">
+                {% csrf_token %}
+
+                <button class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
+              </form>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <!-- Example Todo Row -->
-          {% for todo in todos %}
-            <tr>
-              <td class="py-2 px-4 border-b text-center">{{ forloop.counter }}</td>
-              <td class="py-2 px-4 border-b">{{ todo.text }}</td>
-              <td class="py-2 px-4 border-b">{{ todo.description }}</td>
-              <td class="py-2 px-4 border-b text-gray-500 italic">
-                {% if todo.meta %}
-                  {{ todo.meta }}
-                {% else %}
-                  -
-                {% endif %}
-              </td>
-              <td class="py-2 px-4 border-b">{{ todo.created_at }}</td>
-              <td class="py-2 px-4 border-b">{{ todo.updated_at }}</td>
-              <td class="py-2 px-4 border-b flex gap-2">
-                <a href="{% url 'single' todo.id %}" class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600">View</a>
-                <a href="{% url 'update' todo.id %}" class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">Edit</a>
-                <form method="POST" action="{% url 'delete' todo.id %}">
-                  {% csrf_token %}
+        {% endfor %}
 
-                  <button class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">Delete</button>
-                </form>
-              </td>
-            </tr>
-          {% endfor %}
-
-          <!-- More rows here -->
-        </tbody>
-      </table>
-    </div>
-  </body>
-</html>
+        <!-- More rows here -->
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

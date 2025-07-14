@@ -1,46 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>View Todo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-100 p-8">
-    <div class="max-w-lg mx-auto bg-white p-8 rounded shadow">
-      {% if todo %}
-        <h1 class="text-2xl font-bold mb-4">View Todo</h1>
+{% extends 'base.html' %}
+
+{% block title %}
+  Single Todo
+{% endblock %}
+
+{% block content %}
+  <div class="max-w-lg mx-auto bg-white p-8 rounded shadow border">
+    {% if todo %}
+      <h1 class="text-2xl font-bold mb-4">View Todo</h1>
+      <div class="mb-4">
+        <span class="font-semibold">ID:</span> {{ todo.id }}
+      </div>
+      <div class="mb-4">
+        <span class="font-semibold">Text:</span> {{ todo.text }}
+      </div>
+      <div class="mb-4">
+        <span class="font-semibold">Description:</span> {{ todo.description }}
+      </div>
+      {% if todo.meta %}
         <div class="mb-4">
-          <span class="font-semibold">ID:</span> {{ todo.id }}
-        </div>
-        <div class="mb-4">
-          <span class="font-semibold">Text:</span> {{ todo.text }}
-        </div>
-        <div class="mb-4">
-          <span class="font-semibold">Description:</span> {{ todo.description }}
-        </div>
-        {% if todo.meta %}
-          <div class="mb-4">
-            <span class="font-semibold">Meta:</span> {{ todo.meta }}
-          </div>
-        {% endif %}
-        <div class="mb-4">
-          <span class="font-semibold">Created At:</span> {{ todo.created_at }}
-        </div>
-        <div class="mb-4">
-          <span class="font-semibold">Updated At:</span> {{ todo.updated_at }}
-        </div>
-        <div class="flex gap-2 mt-4">
-          <a href="{% url 'update' todo.id %}" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Edit</a>
-          <a href="{% url 'index' %}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Back</a>
-        </div>
-      {% else %}
-        <div>
-          <h2>Unable to find your request information</h2>
-          <div class="flex gap-2 mt-4">
-            <a href="{% url 'index' %}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Go Back to List</a>
-          </div>
+          <span class="font-semibold">Meta:</span> {{ todo.meta }}
         </div>
       {% endif %}
-    </div>
-  </body>
-</html>
+      <div class="mb-4">
+        <span class="font-semibold">Created At:</span> {{ todo.created_at }}
+      </div>
+      <div class="mb-4">
+        <span class="font-semibold">Updated At:</span> {{ todo.updated_at }}
+      </div>
+      <div class="flex gap-2 mt-4">
+        <a href="{% url 'update' todo.id %}" class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Edit</a>
+        <a href="{% url 'index' %}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Back</a>
+      </div>
+    {% else %}
+      <div>
+        <h2>Unable to find your request information</h2>
+        <div class="flex gap-2 mt-4">
+          <a href="{% url 'index' %}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">Go Back to List</a>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
