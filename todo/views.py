@@ -5,20 +5,20 @@ from django.http import HttpResponse, HttpRequest
 
 
 def index(request):
-    return HttpResponse("Get all todo ")
+    return render(request, "all.html")
 
 
 def create(request):
-    return HttpResponse("Create todo ")
+    return render(request, "create.html")
 
 
 def single(request):
-    return HttpResponse("Get single todo")
+    return render(request, "single.html")
 
 
 def update(request):
-    return HttpResponse("Update todo todo")
+    return render(request, "update.html")
 
 
 def delete(request):
-    return HttpResponse("Delete todo")
+    return render(request, "all.html")

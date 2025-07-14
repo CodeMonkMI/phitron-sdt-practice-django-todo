@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  todo_db:
+    image: postgres:15-alpine
+    container_name: todo-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: todo
+    ports:
+      - "5432:5432"
+    volumes:
+      - django_todo_data:/var/lib/postgresql/data
+    networks:
+      - pg_network
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: Django_Todo_pgadmin
+    restart: on-failure
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+      - "5051:443"
+    depends_on:
+      - todo_db
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    networks:
+      - pg_network
+volumes:
+  django_todo_data:
+  pgadmin:
+
+networks:
+  pg_network:
+    driver: bridge

@@ -22,9 +22,7 @@ staticfiles/
 static/
 local_settings.py
 
-# Django Migrations
-*/migrations/
-!*/migrations/__init__.py
+
 
 # IDEs and Editors
 .vscode/
