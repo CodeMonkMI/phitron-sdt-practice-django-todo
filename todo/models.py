@@ -1,9 +1,10 @@
 from django.db import models
+import uuid
 
 
 # Create your models here.
 class Todo(models.Model):
-    id = models.UUIDField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     text = models.CharField()
     description = models.TextField()
     meta = models.JSONField(blank=True, null=True)
